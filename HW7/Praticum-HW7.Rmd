@@ -1,0 +1,169 @@
+---
+title: "R Notebook"
+output: html_notebook
+author: Sujad Patel
+date: 10/30/22
+---
+## Part 2 Praticum Problems
+
+```{r}
+library(keras) 
+library(dplyr) 
+library(caret) 
+library(rpart) 
+library(rpart.plot)
+```
+
+### 2.1 Feed Forward Neural Networks
+```{r}
+setwd("~/HW7")
+```
+
+```{r include=FALSE}
+df <- read.csv("wifi_localization.csv")
+
+set.seed(1122)
+df <- df[sample(nrow(df)), ]
+index <- sample(1:nrow(df), 0.80*dim(df)[1])
+train.df <- df[index,]
+test.df <- df[-index,]
+
+X_train <- select(train.df, -room)
+y_train <- train.df$room
+y_train.ohe <- to_categorical(y_train)
+
+y_train.ohe1 <- y_train.ohe[,-1]
+
+y_train.ohe1
+
+X_test <- select(test.df, -room)
+y_test <- test.df$room
+#levels(y_test) <- list("0" = "1", "1" = "2")
+y_test.ohe <- to_categorical(y_test)
+y_test.ohe1 <- y_test.ohe[,-1]
+
+```
+### (a)
+```{r}
+
+model <- rpart(room ~ ., method="class", data=train.df)
+pred <- predict(model, test.df, type="class")
+#rpart.plot(model, extra =106)
+print("Decision Tree Model")
+confusionMatrix(pred, as.factor(test.df$room))
+
+
+```
+### (b)
+```{r}
+
+# Build the neural network 1
+NNmodel <- keras_model_sequential()
+NNmodel %>%
+  layer_dense(units = 1, activation = 'relu') %>%
+  layer_dense(units = 4, activation = 'softmax')
+
+```
+```{r}
+# Compile it
+NNmodel %>% compile(
+  optimizer = 'adam', 
+  loss = 'categorical_crossentropy',
+  metrics = c('accuracy'))
+```
+
+```{r include=FALSE}
+NNmodel %>% fit(data.matrix(X_train),y_train.ohe1, epochs = 100, validation_split=0.20, batch_size = 32)
+NNmodel %>% evaluate(as.matrix(X_test), y_test.ohe1)
+```
+
+
+```{r}
+pred.prob <- predict(NNmodel, as.matrix(X_test))
+y_test <- as.factor(y_test)
+pred.class <- apply(pred.prob, 1, function(x) which.max(x)-1) 
+pred.class <- as.factor(pred.class)
+levels(pred.class) <- list("1" = "0", "2" = "1")
+levels(pred.class) <- c(levels(pred.class),"3", "4")
+confusionMatrix(as.factor(pred.class), as.factor(y_test))
+```
+### (b).i
+```{r}
+print(" For one neuron in hidden layer, loss: 1.08, Accuracy: 0.51")
+```
+
+### (b).ii
+```{r}
+print("The accuracy is low because there are not many neurons to compute and extract information from the training data. This also suggests that the data is not linearly sepearable.")
+```
+### (b).iii
+```{r}
+print("The network predicted room 2 and 1 the most with no prediction for room 4, I suspect there might be a mistake in preparing the data. Other then that, I think for 1 neuron it has done fairly well.")
+```
+### (b).iv
+```{r}
+print("The biases seemed just about right.")
+```
+### (b).v
+```{r}
+print("There are might be a slight improvement from increasing epochs, but at the same time risks of overfitting also increases.")
+```
+
+### (c)
+```{r}
+# Build the neural network 2
+NNmodel2 <- keras_model_sequential()
+NNmodel2 %>%
+  layer_dense(units =11, activation = 'relu') %>%
+  layer_dense(units = 4, activation = 'softmax')
+
+```
+
+```{r}
+# Compile it
+NNmodel2 %>% compile(
+  optimizer = 'adam', 
+  loss = 'categorical_crossentropy',
+  metrics = c('accuracy'))
+```
+
+```{r include=FALSE}
+NNmodel2 %>% fit(data.matrix(X_train),y_train.ohe1, epochs = 100, validation_split=0.20, batch_size = 32)
+NNmodel2 %>% evaluate(as.matrix(X_test), y_test.ohe1)
+```
+### (c).i
+```{r}
+print("Best model has 11 neurons in the hidden layer.")
+print("In this model, loss: 0.14, Accuracy: 0.96.")
+```
+### (c).ii
+```{r}
+print("The bias seems just about right.")
+```
+### (c).iii
+```{r}
+print(") Based on the plots of accuracy and validation, at around epoch 80, it starts to level off.")
+```
+## (d)
+```{r}
+pred.prob <- predict(NNmodel2, as.matrix(X_test))
+pred.class <- apply(pred.prob, 1, function(x) which.max(x)-1) 
+y_test <- as.factor(y_test)
+pred.class <- as.factor(pred.class)
+
+levels(pred.class) <- list("1" = "0", "2" = "1")
+levels(pred.class) <- c(levels(pred.class),"3", "4")
+
+confusionMatrix(as.factor(pred.class), as.factor(y_test))
+```
+
+### (d).i
+```{r}
+print("There is clearly a major improvement over second Neural network model. ")
+```
+
+### (d).i
+```{r}
+print("I would use model 2 with 11 neurons in the hidden layer. The processing power is required a lot more in model 2 but it achieves higher accuracy and doesn't require as many epochs.")
+```
+

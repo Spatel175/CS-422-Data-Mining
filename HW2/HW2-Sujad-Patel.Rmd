@@ -1,0 +1,189 @@
+---
+title: "HW2-Sujad-Patel"
+output: html_notebook
+---
+## Programming Problems
+```{r}
+library(ISLR)
+```
+
+### Part 2.1
+```{r}
+set.seed(1122)
+index <- sample(1:nrow(Auto), 0.95*dim(Auto)[1])
+train.df <- Auto[index,]
+test.df <- Auto[-index,]
+```
+
+### Part 2.1-a
+```{r}
+model.train <-lm(mpg ~ . - name, data=train.df)
+```
+
+### Part 2.1-a-i
+```{r}
+# We are not using name attribute, since its does not correlate with the response. Unnecessary data will bring extra noise into the model
+```
+
+### Part 2.1-a-ii
+```{r}
+res <- summary(model.train)
+res
+rSqr <- res$r.squared
+adjRSqr <- res$adj.r.squared
+rss <- sum(res$residuals**2)
+p = length(res$coefficients) - 1
+n = length(res$residuals)
+rse <- sqrt(rss/(n-p-1))
+rmse <- sqrt(rss/n)
+cat("R-sq value is ", signif(rSqr, digits = 2), 
+    "\nAdjusted R-sq value is ", signif(adjRSqr, digits = 2),
+    "\nRSE is ", signif(rse, digits = 2),
+    "\nRMSE is ", signif(rmse, digits = 2))
+```
+### Part 2.1-a-iii
+```{r}
+plot(model.train$fitted.values, model.train$residuals,
+     xlab = "Fitted values\nlm(mpg ~ . - names)",
+     ylab = "Residuals",
+     main = "Residuals vs. Fitted")
+abline(0,0)
+```
+
+### Part 2.1-a-iv
+```{r}
+x2 <- seq(min(model.train$residuals), max(model.train$residuals), length = 372)
+fun <- dnorm(x2, mean = mean(model.train$residuals), sd = sd(model.train$residuals))
+hist(model.train$residuals)
+
+hist(model.train$residuals,
+     prob = TRUE,
+     main = "Histogram with normal curve")
+lines(x2, fun, col = 2, lwd = 2)
+
+# The histogram seems to follow normal curve. Since the residuals are normal, it means that the predictors are independent and model inference (confidence intervals, model predictions) should also be valid.
+```
+### Part 2.1-b-i
+```{r}
+model2.train <- lm(mpg ~ year + weight + origin, data = train.df)
+```
+
+### Part 2.1-b-ii
+```{r}
+res <- summary(model2.train)
+res
+anova(model2.train)
+rSqr <- res$r.squared
+adjRSqr <- res$adj.r.squared
+rss <- sum(res$residuals**2)
+p = length(res$coefficients) - 1
+n = length(res$residuals)
+rse <- sqrt(rss/(n-p-1))
+rmse <- sqrt(rss/n)
+cat("R-sq value is ", signif(rSqr, digits = 2), 
+    "\nAdjusted R-sq value is ", signif(adjRSqr, digits = 2),
+    "\nRSE is ", signif(rse, digits = 2),
+    "\nRMSE is ", signif(rmse, digits = 2))
+```
+
+### Part 2.1-b-iv
+```{r}
+x2 <- seq(min(model2.train$residuals), max(model2.train$residuals), length = 372)
+fun <- dnorm(x2, mean = mean(model2.train$residuals), sd = sd(model2.train$residuals))
+hist(model2.train$residuals)
+
+hist(model2.train$residuals,
+     prob = TRUE,
+     main = "Histogram with normal curve")
+lines(x2, fun, col = 2, lwd = 2)
+
+```
+### Part 2.1-b-v
+```{r}
+#R-Sqaured of model2 is lower by 0.0022 indicating that the model2 fits little bit better than model1. Although, model1's RSE is lower than model2 (by 0.022), indicating that it might be better model.
+#In conclusion, both model are equal, thus, suggesting that 3 predictors are not enough and addition of "displacement" might create a better model than either.
+
+```
+
+### Part 2.1-c
+```{r}
+predict <- (predict(model2.train,newdata = test.df, interval = "confidence"))
+```
+
+### Part 2.1-d
+```{r}
+table <- data.frame(predict[,1], test.df$mpg, predict[,2], predict[,3])
+table['Matches'] = 0
+rownames(table) <- NULL
+colnames(table)[1] = "Prediction"
+colnames(table)[2] = "Response"
+colnames(table)[3] = "Lower"
+colnames(table)[4] = "Upper"
+
+for (i in 1:nrow(table)){
+  if(table[i,2] > table[i,3] || table[i,2] < table[i,4]){
+    
+    table[i,5] = 1
+  }
+}
+
+table
+
+count <- 0
+for(i in 1:nrow(table)){
+  if ( table[i,5] == 1){
+    count <- count + 1
+  }
+}
+cat("Total observation correctly predicted: ", count)
+```
+
+
+
+### Part 2.1-e
+```{r}
+predict <- (predict(model2.train,newdata = test.df, interval = "prediction"))
+table <- data.frame(predict[,1], test.df$mpg, predict[,2], predict[,3])
+table['Matches'] = 0
+rownames(table) <- NULL
+colnames(table)[1] = "Prediction"
+colnames(table)[2] = "Response"
+colnames(table)[3] = "Lower"
+colnames(table)[4] = "Upper"
+
+for (i in 1:nrow(table)){
+  if(table[i,2] > table[i,3] || table[i,2] < table[i,4]){
+    
+    table[i,5] = 1
+  }
+}
+table
+
+count <- 0
+for(i in 1:nrow(table)){
+  if ( table[i,5] == 1){
+    count <- count + 1
+  }
+}
+cat("Total observation correctly predicted: ", count)
+
+
+```
+
+### Part 2.1-f
+```{r}
+#I dont know if this is a fluke or my model has predicted 100% of time between both confidence and prediction Intervals.
+```
+
+### Part 2.1-f-i
+```{r}
+# Both, confidence and prediction, Intervals matches all samples within its intervals.
+
+```
+
+### Part 2.1-f-ii
+```{r}
+# I suspect that linear regression is a good method of analysis for this problem?
+```
+
+

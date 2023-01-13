@@ -1,0 +1,202 @@
+---
+title: "R Notebook"
+output: html_notebook
+author: Sujad Patel
+date: 10/30/22
+---
+## Part 2 Praticum Problems
+
+```{r}
+library(cluster)
+library(fpc)
+library(dbscan)
+library(factoextra)
+library(NbClust)
+```
+
+## 2.1 K-means clustering
+### (a).i
+
+```{r}
+
+df <- read.csv("File19comma.csv", sep = ",", header = FALSE)
+df_rownames <- c("Opossum",                
+"Hairy tail mole",
+"Common mole",            
+"Star nose mole",         
+"Brown bat",              
+"Silver hair bat",        
+"Pigmy bat",              
+"House bat",              
+"Red bat",                
+"Hoary bat",              
+"Lump nose bat" ,                 
+"Pika"     ,              
+"Snowshoe rabbit"  ,      
+"Beaver",                 
+"Marmot" ,                
+"Groundhog" ,             
+"Prairie Dog" ,           
+"Ground Squirrel" ,       
+"Chipmunk" ,              
+"Gray squirrel" ,         
+"Fox squirrel",           
+"Pocket gopher",          
+"Kangaroo rat" ,          
+"Pack rat" ,              
+"Field mouse"  ,          
+"Muskrat" ,               
+"Black rat"  ,            
+"House mouse" ,           
+"Porcupine"  ,            
+"Guinea pig" ,            
+"Coyote" ,                
+"Wolf"  ,                 
+"Fox" ,                   
+"Bear" ,                  
+"Civet cat" ,             
+"Raccoon",                
+"Marten" ,                
+"Fisher" ,                
+"Weasel" ,                
+"Mink"  ,                 
+"Ferrer" ,                
+"Wolverine" ,             
+"Badger"   ,              
+"Skunk",                  
+"River otter" ,           
+"Sea otter" ,             
+"Jaguar"  ,               
+"Ocelot" ,                
+"Cougar"   ,              
+"Lynx"   ,                
+"Fur seal" ,              
+"Sea lion" ,              
+"Walrus" ,                
+"Grey seal",              
+"Elephant seal",          
+"Peccary"   ,             
+"Elk"     ,               
+"Deer"  ,                 
+"Moose"  ,                
+"Reindeer"  ,             
+"Antelope"   ,            
+"Bison"       ,           
+"Mountain goat"  ,        
+"Musk ox"        ,        
+"Mountain sheep"         
+)
+rownames(df) <- df_rownames
+# To clean the data set, I removed "Armadillo", #12 because it clearly was an outlier with mostly empty columns and few extreme values.I also removed the first column, since pattern category is not similar to other categories. 
+```
+
+### (a).ii
+```{r}
+# Max of each colums are mostly same except in some cases where it is 5 and 1. Therefore scaling might be helpful.
+df.scaled <- scale(df)
+```
+### (a).iii
+```{r}
+#Done using excel. File is included in the archive.
+```
+##(b) Clustering
+
+###(b).i
+```{r}
+wssplot <- function(data, nc=15, seed=1234){
+                  wss <- (nrow(data)-1)*sum(apply(data,2,var))
+                      for (i in 2:nc){
+                set.seed(seed)
+                    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+              plot(1:nc, wss, type="b", xlab="Number of Clusters",
+                            ylab="Within groups sum of squares")
+              wss
+       }
+wssplot(df.scaled)
+# There is distinct drop from one to two, after two clusters the drop is decreasing. Therefore, 2-cluster is a good choice according to WSS plot.
+fviz_nbclust(df.scaled, kmeans, method = "silhouette", k.max= 15)
+
+```
+### (b).ii
+```{r}
+k <- kmeans(df.scaled, centers = 2) 
+fviz_cluster(k, data=df.scaled, geom = "point") 
+#k$cluster
+k$tot.withinss
+k$withinss
+k$size
+```
+### (b).iii
+```{r}
+# There are 26 onservations in cluster one and 39 obsdervation in cluster two.
+```
+
+### (b).iv
+```{r}
+# The SSE of all cluster is 228.724
+```
+### (b).v
+```{r}
+# The SSE of cluster one is 78.341 and SSE for cluster two is 150.383
+```
+
+### (b).vi
+```{r}
+# The clusters seems to be separeted by predator and prey labels.
+```
+
+
+## 2.2
+
+###(a)
+```{r}
+df1<- read.csv("s1.csv")
+df1
+```
+## (a).i
+```{r}
+#Since the data is comprised of numbers, why not standardize them? However, they should benefit from normalization.
+df1.scaled <- scale(df1)
+```
+## (a).ii
+```{r}
+plot(df1.scaled)
+```
+### (b).ii
+```{r}
+# There seems to be 14 clusters in the above plot. The boundries between most of cluster is fuzzy, though, there are few well separated cluster on the far right.
+```
+
+### (c).i
+```{r}
+fviz_nbclust(df1.scaled, kmeans, method = "wss", k.max= 15)
+
+```
+### (c).ii
+```{r}
+fviz_nbclust(df1.scaled, kmeans, method = "silhouette", k.max= 15)
+
+```
+### (c).iii
+```{r}
+# I think 4 cluster is the appropriate number of clusters.
+```
+
+### (d)
+```{r}
+k1 <- kmeans(df1.scaled, centers = 4) 
+fviz_cluster(k1, data=df1.scaled, geom = "point")
+```
+### (e).i
+```{r}
+#Generally, MinPts should be greater than or equal to the dimensionality of the data set. I think 4 is good start, 2 *Dim, but it may be necessary to choose larger values for very large data, for noisy data, or for data that contains many duplicates.
+
+```
+
+### (e). ii
+```{r}
+dbscan::kNNdistplot(df1.scaled, k =  4)
+cl <- dbscan(df1.scaled, eps = .1)
+cl
+```
+

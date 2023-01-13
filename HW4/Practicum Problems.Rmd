@@ -1,0 +1,162 @@
+---
+title: "CS 422"
+author: "Sujad Patel, A20500962"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Part 2
+```{r}
+library(rpart)
+library(caret)
+library(rpart.plot)
+library(ROCR)
+options(digits=3)
+```
+
+
+### 2.1 Decision tree classification
+
+```{r}
+t <- read.csv("adult-train.csv", header=T, sep=",")
+t1 <- t[which(t$occupation != "?"), ]
+t2 <- t1[which(t1$work != "?"), ]
+training <- t2[which(t2$native_country != "?"), ]
+
+x <-  read.csv("adult-test.csv", header=T, sep=",")
+x1 <- x[which(x$occupation != "?"), ]
+x2 <- x1[which(x1$work != "?"), ]
+testing <- x2[which(x2$native_country != "?"), ]
+
+
+```
+
+### (a)
+```{r}
+cat("# of instances in training set : ", nrow(t),
+    "\n# of instances in testing set :", nrow(x),
+    "\n# of instances after removing '?' in training set is ", nrow(training),
+    "\n# of instances after removing '?' in testing set is ", nrow(testing))
+
+```
+### (b)
+```{r}
+set.seed(1122)
+model <- rpart(income ~ . , method = "class", data = training)
+```
+### b.(i)
+```{r}
+cat("Top three important predictors are Relationship, Marital_status, and Capital_gain.")
+```
+### b.(ii)
+```{r}
+cat("The first split is done on relationship.",
+    "\nPredicted class of the root node is '<= 50K'",
+    "\nThe distribution is 75% of '<= 50K' and 25% of '> 50K'.")
+```
+### (c)
+```{r}
+predict <- predict(model, newdata=testing, type = "class")
+income <- as.factor(testing$income)
+confusionMatrix(predict, income)
+```
+### c.(i)
+```{r}
+cat("Balanced accuracy is 0.726")
+```
+
+### c.(ii)
+```{r}
+cat("Balanced error rate is", 1 - 0.726)
+
+```
+### c.(iii)
+```{r}
+cat("Sensitivity is 0.948",
+    "\nSpecificity is 0.504")
+```
+### c.(iv)
+```{r}
+predict.roc <- predict(model, newdata=testing, type="prob")[ , 2]
+f.pred <- prediction(predict.roc,testing$income)
+f.perf <- performance(f.pred, "tpr", "fpr")
+plot(f.perf, colorize= T, lwd=3)
+abline(0,1)
+auc <- performance(f.pred, measure='auc')
+cat("AUC is", auc@y.values[[1]])
+```
+### (d)
+```{r}
+printcp(model)
+plotcp(model)
+cat("There is no need for pruning, since, the CP graph steadily decreases and does not rise at all. Indicating that the model is fitted well. ")
+```
+### (e)
+```{r}
+set.seed(1122)
+```
+### e.(i)
+```{r}
+countless <- sum(training$income == "<=50K")
+countmore <- sum(training$income != "<=50K")
+cat(countless, "observations in the Training dataset has '<=50K' ")
+cat("\n",countmore, "observations in the Training dataset has '>50K' ")
+
+```
+### e.(ii)
+```{r}
+newtrain <- data.frame(training[which(training$income == "<=50K"), ])
+less50 <- sample(1:nrow(newtrain), 7508, replace = T)
+newtrain2 <- data.frame(training[which(training$income != "<=50K"), ])
+newtrainset <- rbind(newtrain[less50, ], newtrain2)
+count <- sum(newtrainset$income != ">50K")
+count
+```
+### e.(iii)
+```{r}
+newmodel <- rpart(income ~ . , method = "class", data = newtrainset)
+predict <- predict(newmodel, newdata=testing, type = "class")
+income <- as.factor(testing$income)
+confusionMatrix(predict, income)
+```
+### e.iii.(i)
+```{r}
+cat("Balanced accuracy is", 0.804)
+```
+
+### e.iii.(ii)
+```{r}
+cat("Balanced error rate is", 1 - 0.804)
+```
+
+### e.iii.(iii)
+```{r}
+cat("Sensitivity is 0.760",
+    "\nSpecificity is 0.848")
+```
+
+###e.iii.(iv)
+```{r}
+predict.roc <- predict(newmodel, newdata=testing, type="prob")[ , 2]
+f.pred <- prediction(predict.roc,testing$income)
+f.perf <- performance(f.pred, "tpr", "fpr")
+plot(f.perf, colorize= T, lwd=3)
+abline(0,1)
+auc <- performance(f.pred, measure='auc')
+cat("AUC is", auc@y.values[[1]])
+```
+### (f)
+```{r}
+cat("For the new model, sensitivity lowered but specificity increased, indicating that the new model is not as good as previous. The balanced Accuracy improved but not significantly. The CI also increased, indicating poorer confidence.")
+```
+
+

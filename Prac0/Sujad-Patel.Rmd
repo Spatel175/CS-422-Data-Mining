@@ -1,0 +1,48 @@
+---
+title: "CS 422"
+author: "Sujad Patel, A20500962"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
+---
+
+### Part 1-A (Print).
+```{r}
+setwd("/tmp")
+data(cars)
+cars
+```
+
+### Part 1-B (Plots).
+
+```{r}
+# Add code here.  See manual page for the plot() command.
+Speed <- cars$speed
+Distance <- cars$dist
+plot(Speed, Distance, main ='Scatterplot', panel.first = grid(5,5),
+     pch = 19, cex = 1.0, col = "blue")
+plot(Speed, Distance, type = 'l', main ='Line Graph', panel.first = grid(5,5),
+     pch = 19, cex = 1.0, col = "red")
+lines(stats::lowess(cars), type = 'o')
+```
+### Part 1-C (Summary).
+```{r}
+# Add code here.  See manual page for the summary() command.
+summary(cars)
+```
+
+### Part 1-D 
+```{r}
+# Add code here.  Save maximum speed in a variable called "max.speed" and
+# minimum distance in a variable called "min.dist".  The code below will
+# print your output.
+max.speed <- max(Speed)
+min.dist  <- min(Distance)
+str <- paste0("Maximum speed is ", max.speed, ", and minimum distance is ", 
+              min.dist)
+str
+```

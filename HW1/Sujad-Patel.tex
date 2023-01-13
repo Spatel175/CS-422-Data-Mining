@@ -1,0 +1,543 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={CS 422},
+  pdfauthor={Sujad Patel, A20500962},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{CS 422}
+\author{Sujad Patel, A20500962}
+\date{}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{exercise-2}{%
+\subsection{Exercise 2}\label{exercise-2}}
+
+\hypertarget{part-2.1-i}{%
+\subsubsection{Part 2.1-i}\label{part-2.1-i}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{( }\StringTok{"/home/sp\_wsl"}\NormalTok{)}
+\NormalTok{data.df }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}us{-}covid.csv\textquotesingle{}}\NormalTok{, }\AttributeTok{sep=}\StringTok{\textquotesingle{},\textquotesingle{}}\NormalTok{, }\AttributeTok{skip =} \DecValTok{7}\NormalTok{, }\AttributeTok{header =}\NormalTok{ T)}
+\NormalTok{data.df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   state level total_cases confirmed probable cases_last_7_days
+## 1               Alabama  high     1172663    851889   320774             80296
+## 2                Alaska  high      194176         0        0             21847
+## 3               Arizona  high     1781274   1588439   192835            135580
+## 4              Arkansas  high      749824         0        0             61835
+## 5            California  high     7929436   7482469   446967            743850
+## 6              Colorado  high     1215931   1111809   104122             69191
+## 7           Connecticut  high      687555    617027    70528             29875
+## 8              Delaware  high      242324    221181    21143             11448
+## 9  District of Columbia  high      128739         0        0              3032
+## 10              Florida  high     5420755         0        0            224996
+## 11              Georgia  high     2288693   1777459   511234            128154
+## 12               Hawaii  high      202064         0        0             25625
+## 13                Idaho  high      364577    286372    78205             20165
+## 14             Illinois  high     2851567   2851567        0            168584
+## 15              Indiana  high     1569850         0        0             95561
+## 16                 Iowa  high      699859         0        0             34949
+## 17               Kansas  high      695675    526041   169634             74402
+## 18             Kentucky  high     1100097    771328   328769             85394
+## 19            Louisiana  high     1084448         0        0             58700
+## 20                Maine  high      169997    124857    45140              7056
+## 21             Maryland  high      940713         0        0             31289
+## 22        Massachusetts  high     1571650   1449781   121869             84373
+## 23             Michigan  high     2184376   1918374   266002            120967
+## 24            Minnesota  high     1264935         0        0            116047
+## 25          Mississippi  high      699002    399062   299940             41918
+## 26             Missouri  high     1285040         0        0             79268
+## 27              Montana  high      229966    184416    45550             13978
+## 28             Nebraska  high      428949    307862   121087             26460
+## 29               Nevada  high      633955    604173    29782             37458
+## 30        New Hampshire  high      266000         0        0             15419
+## 31           New Jersey  high     2078258   1796200   282058             63556
+## 32           New Mexico  high      455947         0        0             35755
+## 33             New York  high     2507445         0        0             85392
+## 34       North Carolina  high     2303196   1945407   357789            155765
+## 35         North Dakota  high      214459    164861    49598             15246
+## 36                 Ohio  high     2520112   1964622   555490            101320
+## 37             Oklahoma  high      931033    690709   240324             78036
+## 38               Oregon  high      597172    597172        0             55757
+## 39         Pennsylvania  high     2592691   2147222   445469            104766
+## 40          Puerto Rico  high      448538    254785   193753             25317
+## 41         Rhode Island  high      334581         0        0             17237
+## 42       South Carolina  high     1262939    996069   266870             36951
+## 43         South Dakota  high      221372         0        0             15970
+## 44            Tennessee  high     1796908   1384512   412396            121246
+## 45                Texas  high     6018220         0        0            373823
+## 46                 Utah  high      854559    854559        0             64343
+## 47              Vermont  high       92563         0        0              7446
+## 48             Virginia  high     1503137   1072717   430420             83240
+## 49           Washington  high     1216544         0        0            110922
+## 50        West Virginia  high      425013    336565    88448             32276
+## 51            Wisconsin  high     1477323   1298296   179027             76985
+## 52              Wyoming  high      139461    109726    29735              8908
+##    case_rate_per_100K total_deaths confirmed_deaths
+## 1               23916        16948            13126
+## 2               26543         1039              N/A
+## 3               24472        25624            22105
+## 4               24847         9556              N/A
+## 5               20068        78118              N/A
+## 6               21114        10933             9650
+## 7               19285         9773             7974
+## 8               24885         2489             2281
+## 9               18242         1278              N/A
+## 10              25239        64007              N/A
+## 11              21556        32488            27191
+## 12              14271         1135              N/A
+## 13              20401         4345             3573
+## 14              22503        33942            30276
+## 15              23318        20928            20167
+## 16              22182         8501              N/A
+## 17              23879         7336              N/A
+## 18              24624        12786            11203
+## 19              23328        15476            13388
+## 20              12647         1716             1571
+## 21              15560        13233            12978
+## 22              22802        21669            21107
+## 23              21872        31704            29373
+## 24              22429        11370            10543
+## 25              23487        10755             7200
+## 26              20938        17070              N/A
+## 27              21517         2987             2987
+## 28              22175         3632             3012
+## 29              20582         8797              N/A
+## 30              19563         2170              N/A
+## 31              23398        30950            28043
+## 32              21745         6317              N/A
+## 33              22682        25507              N/A
+## 34              21960        20335            17874
+## 35              28142         2078              N/A
+## 36              21560        32489            32489
+## 37              23529        12044             9037
+## 38              14159         5994             5994
+## 39              20252        39749              N/A
+## 40              14044         3754             3132
+## 41              31583         3263              N/A
+## 42              24529        15109              N/A
+## 43              25023         2609             2231
+## 44              26312        22255            16775
+## 45              20755        77058              N/A
+## 46              26655         4073             3911
+## 47              14834          498              N/A
+## 48              17610        16054            13407
+## 49              15976        10540              N/A
+## 50              23715         5650              N/A
+## 51              25373        12112            10908
+## 52              24097         1625             1625
+\end{verbatim}
+
+\hypertarget{part-2.1-ii}{%
+\subsubsection{Part 2.1-ii}\label{part-2.1-ii}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydata }\OtherTok{\textless{}{-}}\NormalTok{ data.df}
+\NormalTok{data.df }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(mydata, }\SpecialCharTok{{-}}\DecValTok{9}\NormalTok{)}
+\NormalTok{data.df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   state level total_cases confirmed probable cases_last_7_days
+## 1               Alabama  high     1172663    851889   320774             80296
+## 2                Alaska  high      194176         0        0             21847
+## 3               Arizona  high     1781274   1588439   192835            135580
+## 4              Arkansas  high      749824         0        0             61835
+## 5            California  high     7929436   7482469   446967            743850
+## 6              Colorado  high     1215931   1111809   104122             69191
+## 7           Connecticut  high      687555    617027    70528             29875
+## 8              Delaware  high      242324    221181    21143             11448
+## 9  District of Columbia  high      128739         0        0              3032
+## 10              Florida  high     5420755         0        0            224996
+## 11              Georgia  high     2288693   1777459   511234            128154
+## 12               Hawaii  high      202064         0        0             25625
+## 13                Idaho  high      364577    286372    78205             20165
+## 14             Illinois  high     2851567   2851567        0            168584
+## 15              Indiana  high     1569850         0        0             95561
+## 16                 Iowa  high      699859         0        0             34949
+## 17               Kansas  high      695675    526041   169634             74402
+## 18             Kentucky  high     1100097    771328   328769             85394
+## 19            Louisiana  high     1084448         0        0             58700
+## 20                Maine  high      169997    124857    45140              7056
+## 21             Maryland  high      940713         0        0             31289
+## 22        Massachusetts  high     1571650   1449781   121869             84373
+## 23             Michigan  high     2184376   1918374   266002            120967
+## 24            Minnesota  high     1264935         0        0            116047
+## 25          Mississippi  high      699002    399062   299940             41918
+## 26             Missouri  high     1285040         0        0             79268
+## 27              Montana  high      229966    184416    45550             13978
+## 28             Nebraska  high      428949    307862   121087             26460
+## 29               Nevada  high      633955    604173    29782             37458
+## 30        New Hampshire  high      266000         0        0             15419
+## 31           New Jersey  high     2078258   1796200   282058             63556
+## 32           New Mexico  high      455947         0        0             35755
+## 33             New York  high     2507445         0        0             85392
+## 34       North Carolina  high     2303196   1945407   357789            155765
+## 35         North Dakota  high      214459    164861    49598             15246
+## 36                 Ohio  high     2520112   1964622   555490            101320
+## 37             Oklahoma  high      931033    690709   240324             78036
+## 38               Oregon  high      597172    597172        0             55757
+## 39         Pennsylvania  high     2592691   2147222   445469            104766
+## 40          Puerto Rico  high      448538    254785   193753             25317
+## 41         Rhode Island  high      334581         0        0             17237
+## 42       South Carolina  high     1262939    996069   266870             36951
+## 43         South Dakota  high      221372         0        0             15970
+## 44            Tennessee  high     1796908   1384512   412396            121246
+## 45                Texas  high     6018220         0        0            373823
+## 46                 Utah  high      854559    854559        0             64343
+## 47              Vermont  high       92563         0        0              7446
+## 48             Virginia  high     1503137   1072717   430420             83240
+## 49           Washington  high     1216544         0        0            110922
+## 50        West Virginia  high      425013    336565    88448             32276
+## 51            Wisconsin  high     1477323   1298296   179027             76985
+## 52              Wyoming  high      139461    109726    29735              8908
+##    case_rate_per_100K total_deaths
+## 1               23916        16948
+## 2               26543         1039
+## 3               24472        25624
+## 4               24847         9556
+## 5               20068        78118
+## 6               21114        10933
+## 7               19285         9773
+## 8               24885         2489
+## 9               18242         1278
+## 10              25239        64007
+## 11              21556        32488
+## 12              14271         1135
+## 13              20401         4345
+## 14              22503        33942
+## 15              23318        20928
+## 16              22182         8501
+## 17              23879         7336
+## 18              24624        12786
+## 19              23328        15476
+## 20              12647         1716
+## 21              15560        13233
+## 22              22802        21669
+## 23              21872        31704
+## 24              22429        11370
+## 25              23487        10755
+## 26              20938        17070
+## 27              21517         2987
+## 28              22175         3632
+## 29              20582         8797
+## 30              19563         2170
+## 31              23398        30950
+## 32              21745         6317
+## 33              22682        25507
+## 34              21960        20335
+## 35              28142         2078
+## 36              21560        32489
+## 37              23529        12044
+## 38              14159         5994
+## 39              20252        39749
+## 40              14044         3754
+## 41              31583         3263
+## 42              24529        15109
+## 43              25023         2609
+## 44              26312        22255
+## 45              20755        77058
+## 46              26655         4073
+## 47              14834          498
+## 48              17610        16054
+## 49              15976        10540
+## 50              23715         5650
+## 51              25373        12112
+## 52              24097         1625
+\end{verbatim}
+
+\hypertarget{part-2.1-iii-a}{%
+\subsubsection{Part 2.1-iii-a}\label{part-2.1-iii-a}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{arrange}\NormalTok{(data.df,}\FunctionTok{desc}\NormalTok{(total\_cases)), }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          state level total_cases confirmed probable cases_last_7_days
+## 1   California  high     7929436   7482469   446967            743850
+## 2        Texas  high     6018220         0        0            373823
+## 3      Florida  high     5420755         0        0            224996
+## 4     Illinois  high     2851567   2851567        0            168584
+## 5 Pennsylvania  high     2592691   2147222   445469            104766
+## 6         Ohio  high     2520112   1964622   555490            101320
+##   case_rate_per_100K total_deaths
+## 1              20068        78118
+## 2              20755        77058
+## 3              25239        64007
+## 4              22503        33942
+## 5              20252        39749
+## 6              21560        32489
+\end{verbatim}
+
+\hypertarget{part-2.1-iii-b}{%
+\subsubsection{Part 2.1-iii-b}\label{part-2.1-iii-b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tail}\NormalTok{(}\FunctionTok{arrange}\NormalTok{(data.df,}\FunctionTok{desc}\NormalTok{(total\_cases)), }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   state level total_cases confirmed probable cases_last_7_days
+## 47               Hawaii  high      202064         0        0             25625
+## 48               Alaska  high      194176         0        0             21847
+## 49                Maine  high      169997    124857    45140              7056
+## 50              Wyoming  high      139461    109726    29735              8908
+## 51 District of Columbia  high      128739         0        0              3032
+## 52              Vermont  high       92563         0        0              7446
+##    case_rate_per_100K total_deaths
+## 47              14271         1135
+## 48              26543         1039
+## 49              12647         1716
+## 50              24097         1625
+## 51              18242         1278
+## 52              14834          498
+\end{verbatim}
+
+\hypertarget{part-2.1-iv}{%
+\subsubsection{Part 2.1-iv}\label{part-2.1-iv}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(psych)}
+\FunctionTok{pairs.panels}\NormalTok{(data.df[}\DecValTok{3}\SpecialCharTok{:}\DecValTok{8}\NormalTok{], }\AttributeTok{pch=}\DecValTok{21}\NormalTok{, }\AttributeTok{main =}\StringTok{"Correlation visualization"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Sujad-Patel_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\hypertarget{part-2.1-iv-a}{%
+\subsubsection{Part 2.1-iv-a}\label{part-2.1-iv-a}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# We should exclude the first two columns because they are not necessary may increase the chance of noise, also the state are acting as ID and level has same value alla across the board}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-2.1-iv-b}{%
+\subsubsection{Part 2.1-iv-b}\label{part-2.1-iv-b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Total\_cases and cases\_last\_7\_days have the higest correlation.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-2.1-iv-c}{%
+\subsubsection{Part 2.1-iv-c}\label{part-2.1-iv-c}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# case\_rate\_per\_100k and cases\_last\_7\_days have the lowest correlation.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-2.1-v-a}{%
+\subsubsection{Part 2.1-v-a}\label{part-2.1-v-a}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen=}\DecValTok{999}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(data.df[}\DecValTok{4}\SpecialCharTok{:}\DecValTok{5}\NormalTok{])}
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1172663       0 1781274       0 7929436 1215931  687555  242324       0
+## [10]       0 2288693       0  364577 2851567       0       0  695675 1100097
+## [19]       0  169997       0 1571650 2184376       0  699002       0  229966
+## [28]  428949  633955       0 2078258       0       0 2303196  214459 2520112
+## [37]  931033  597172 2592691  448538       0 1262939       0 1796908       0
+## [46]  854559       0 1503137       0  425013 1477323  139461
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(y, data.df}\SpecialCharTok{$}\NormalTok{total\_deaths, }\AttributeTok{main =}\StringTok{\textquotesingle{}Deaths per cases(confirmed + probable)\textquotesingle{}}\NormalTok{, }\AttributeTok{xlab =}\StringTok{"Total cases"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Deaths"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{cex =} \FloatTok{1.0}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Sujad-Patel_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\hypertarget{part-2.1-v-b}{%
+\subsubsection{Part 2.1-v-b}\label{part-2.1-v-b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The data clearly shows the anomaly, since there are deaths reported while 0 having 0 cases in some sates. The reason for the anomaly is because some states only report total cases, therefore, probable and confirmed cases for these states gets recorded as 0. This creates a false data relation. }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{part-2.1-v-c}{%
+\subsubsection{Part 2.1-v-c}\label{part-2.1-v-c}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{select}\NormalTok{(}\FunctionTok{filter}\NormalTok{(data.df, data.df}\SpecialCharTok{$}\NormalTok{confirmed }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ data.df}\SpecialCharTok{$}\NormalTok{probable }\SpecialCharTok{==} \DecValTok{0}\NormalTok{), }\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   state total_cases confirmed probable total_deaths
+## 1                Alaska      194176         0        0         1039
+## 2              Arkansas      749824         0        0         9556
+## 3  District of Columbia      128739         0        0         1278
+## 4               Florida     5420755         0        0        64007
+## 5                Hawaii      202064         0        0         1135
+## 6               Indiana     1569850         0        0        20928
+## 7                  Iowa      699859         0        0         8501
+## 8             Louisiana     1084448         0        0        15476
+## 9              Maryland      940713         0        0        13233
+## 10            Minnesota     1264935         0        0        11370
+## 11             Missouri     1285040         0        0        17070
+## 12        New Hampshire      266000         0        0         2170
+## 13           New Mexico      455947         0        0         6317
+## 14             New York     2507445         0        0        25507
+## 15         Rhode Island      334581         0        0         3263
+## 16         South Dakota      221372         0        0         2609
+## 17                Texas     6018220         0        0        77058
+## 18              Vermont       92563         0        0          498
+## 19           Washington     1216544         0        0        10540
+\end{verbatim}
+
+\end{document}

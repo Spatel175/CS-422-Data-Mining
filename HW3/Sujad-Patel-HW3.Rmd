@@ -1,0 +1,25 @@
+---
+title: "CS 422"
+author: "Sujad Patel, A20500962"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  html_document:
+    toc: yes
+    df_print: paged
+---
+```{r}
+library(rpart)
+library(caret)
+library(rpart.plot)
+```
+
+## Problem 1.1
+```{r}
+data("iris")
+model <- rpart(Species ~ . , data=iris, method="class")
+model
+rpart.plot(model, extra=104, fallen.leaves=T, type=4, main="Iris Dataset Decision Tree")
+```
+
